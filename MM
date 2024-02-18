@@ -1,0 +1,69 @@
+pip install scipy
+C:/Users/Auhona> cd Downloads
+C:/Users/Auhona/Downloads> python sja.py
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vital Sign Monitor</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background-color: red;  /* Add this line to make the website page red*/
+        }
+        .container{
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .alert{
+            color: white;  /* Change this line to white*/
+            font-weight: bold;
+            font-size: 24px;  /* Add this line to make the alert text big*/
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Vital Sign Monitor</h1>
+        <div id="vital-signs">
+            <p>Heart Rate: <span id="heart-rate">0</span> bpm</p>
+            <p>Breathing Rate: <span id="breathing-rate">0</span> breaths/min</p>
+            <p>Water Pressure: <span id="water-pressure">0</span> m of water depth</p>
+        </div>
+        <div id="alert" class="alert" style="display: none;">
+            <p>Potential drowning detected! Please check the individual's location.</p>
+        </div>
+        <button id="check-drowning">Check for Potential Drowning</button>
+    </div>
+    <script>
+        const vitalSignMonitor = new VitalSignMonitor();
+        const alertSystem = new AlertSystem();
+
+        // Define the updateVitalSigns function
+        function updateVitalSigns() {
+            vitalSignMonitor.measure_vital_signs();
+            document.getElementById("heart-rate").textContent = vitalSignMonitor.heart_rate;
+            document.getElementById("breathing-rate").textContent = vitalSignMonitor.breathing_rate;
+            document.getElementById("water-pressure").textContent = vitalSignMonitor.water_pressure;
+        }
+
+        // Define the checkDrowning function
+        function checkDrowning() {
+            if (vitalSignMonitor.detect_drowning()) {
+                document.getElementById("alert").style.display = "block";
+                alertSystem.send_alert("Potential drowning detected! Please check the individual's location.");
+            } else {
+                document.getElementById("alert").style.display = "none";
+            }
+        }
+
+        // Add an event listener to the check-drowning button
+        document.getElementById("check-drowning").addEventListener("click", checkDrowning);
+
+        // Update vital signs every 5 seconds
+        setInterval(updateVitalSigns, 5000);
+    </script>
+</body>
+</html>
